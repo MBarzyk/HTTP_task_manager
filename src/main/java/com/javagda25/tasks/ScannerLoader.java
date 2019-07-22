@@ -7,10 +7,10 @@ public class ScannerLoader {
 
     public Task editTask() {
         Task taskToEdit = new Task();
-        System.out.println("Which task would you like to edit? (give id)");
-        String idString = scanner.nextLine();
         Long id = null;
         do {
+            System.out.println("Which task would you like to edit? (give id)");
+            String idString = scanner.nextLine();
             try {
                 id = Long.parseLong(idString);
             } catch (IllegalArgumentException iae) {
@@ -22,10 +22,9 @@ public class ScannerLoader {
         System.out.println("Input new name for the task: ");
         String name = scanner.nextLine();
         taskToEdit.setName(name);
-//            taskToEdit.setCreationTime(LocalDateTime.now());
         String line = null;
-        System.out.println("Would you like to set the task as done? (yes/no)");
         do {
+            System.out.println("Would you like to set the task as done? (yes/no)");
             line = scanner.nextLine();
             switch (line) {
                 case "yes":
@@ -39,5 +38,29 @@ public class ScannerLoader {
             }
         } while (line == null);
         return taskToEdit;
+    }
+
+    public Task newTask() {
+        Task taskToPut = new Task();
+        System.out.println("Input name for the new task: ");
+        String name = scanner.nextLine();
+        taskToPut.setName(name);
+
+        return taskToPut;
+    }
+
+    public Integer returnId() {
+        Integer id = null;
+        do {
+            System.out.println("Which task do you want to remove? (write id)");
+            String stringId = scanner.nextLine();
+            try {
+                id = Integer.parseInt(stringId);
+            } catch (IllegalArgumentException iae) {
+                System.err.println("Wrong input, try again!");
+            }
+
+        } while (id == null);
+        return id;
     }
 }

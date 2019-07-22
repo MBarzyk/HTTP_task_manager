@@ -25,18 +25,17 @@ public class Manager {
        HttpResponse<String> response = null;
        try {
            response = client.send(request, HttpResponse.BodyHandlers.ofString());
-       } catch (IOException e) {
-           e.printStackTrace();
-       } catch (InterruptedException e) {
+       } catch (IOException | InterruptedException e) {
            e.printStackTrace();
        }
        return gson.fromJson(response.body(), List.class);
    }
 
-   public boolean delete (String uri, int id) {
+   public boolean delete (String uri) {
 //       stringBuilder.append(uri).append("/").append(String.valueOf(id));
+       Integer id = scannerLoader.returnId();
        request = HttpRequest
-               .newBuilder(URI.create(uri + "/" + id))
+               .newBuilder(URI.create(uri + "/" + String.valueOf(id)))
                .DELETE()
                .build();
 
@@ -59,6 +58,23 @@ public class Manager {
                 .POST(HttpRequest.BodyPublishers.ofString(jsonTask))
                 .header("Content-Type", "application/json")
                 .build();
+
+       try {
+           client.send(request, HttpResponse.BodyHandlers.ofString());
+       } catch (IOException e) {
+           e.printStackTrace();
+       } catch (InterruptedException e) {
+           e.printStackTrace();
+       }
+   }
+
+   public void put (String uri) {
+       String jsonTask = gson.toJson(scannerLoader.newTask());
+
+       request = HttpRequest.newBuilder(URI.create(uri))
+               .PUT(HttpRequest.BodyPublishers.ofString(jsonTask))
+               .header("Content-Type", "application/json")
+               .build();
 
        try {
            client.send(request, HttpResponse.BodyHandlers.ofString());
