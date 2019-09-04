@@ -7,7 +7,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Manager {
    private final HttpClient client = HttpClient.newBuilder().build();
@@ -25,10 +27,10 @@ public class Manager {
        HttpResponse<String> response = null;
        try {
            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+           return gson.fromJson(response.body(), List.class);
        } catch (IOException | InterruptedException e) {
            e.printStackTrace();
-       }
-       return gson.fromJson(response.body(), List.class);
+       } return new ArrayList();
    }
 
    public boolean delete (String uri) {
@@ -42,12 +44,12 @@ public class Manager {
        HttpResponse<String> response = null;
        try {
            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+           return gson.fromJson(response.body(), Boolean.class);
        } catch (IOException e) {
            e.printStackTrace();
        } catch (InterruptedException e) {
            e.printStackTrace();
-       }
-       return gson.fromJson(response.body(), Boolean.class);
+       } return false;
    }
 
    public void post (String uri) {
@@ -84,4 +86,8 @@ public class Manager {
            e.printStackTrace();
        }
    }
+
+//   public Optional<Task> getById () {
+//
+//   }
 }

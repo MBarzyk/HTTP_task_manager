@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class Task {
     private Long id;
     private String name;
-    private LocalDateTime creationTime;
+    private String creationTime;
     private boolean done;
     private String creator;
 
@@ -21,7 +21,7 @@ public class Task {
         this.id = id;
         this.name = name;
         this.creator = creator;
-        this.creationTime = LocalDateTime.now();
+        this.creationTime = String.valueOf(LocalDateTime.now());
         this.done = false;
     }
 }

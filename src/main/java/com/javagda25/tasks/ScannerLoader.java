@@ -63,4 +63,13 @@ public class ScannerLoader {
         } while (id == null);
         return id;
     }
+
+    public void printDone (String uri, Manager manager) {
+        manager.get(uri);
+
+    }
+
+    public void parser () {
+
+    }
 }
